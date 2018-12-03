@@ -3,14 +3,15 @@ package com.arons.android5778_6274_2436.Model.Entities.Classes;
 import com.arons.android5778_6274_2436.Model.Entities.Enum.RideType;
 
 import java.sql.Time;
+import java.util.Date;
 
 public class Ride {
 
     private RideType RideType;
     private Location StartLocation;
     private Location EndLocation;
-    private Time BeginningTime;
-    private Time EndTime;
+    private Date BeginningTime;
+    private Date EndTime;
     private String NameOfCustomer;
     private String PhoneNumberOfCustomer;
     private String MailOfCustomer;
@@ -55,19 +56,19 @@ public class Ride {
         EndLocation = endLocation;
     }
 
-    public Time getBeginningTime() {
+    public Date getBeginningTime() {
         return BeginningTime;
     }
 
-    public void setBeginningTime(Time beginningTime) {
+    public void setBeginningTime(Date beginningTime) {
         BeginningTime = beginningTime;
     }
 
-    public Time getEndTime() {
+    public Date getEndTime() {
         return EndTime;
     }
 
-    public void setEndTime(Time endTime) {
+    public void setEndTime(Date endTime) {
         EndTime = endTime;
     }
 
