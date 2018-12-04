@@ -31,23 +31,24 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        name = (EditText)findViewById(R.id.editName);
-        phone = (EditText)findViewById(R.id.editPhone);
-        mail = (EditText)findViewById(R.id.editMail);
-        location = (EditText)findViewById(R.id.editLoc);
-        arrival = (EditText)findViewById(R.id.editArr);
+        name = (EditText) findViewById(R.id.editName);
+        phone = (EditText) findViewById(R.id.editPhone);
+        mail = (EditText) findViewById(R.id.editMail);
+        location = (EditText) findViewById(R.id.editLoc);
+        arrival = (EditText) findViewById(R.id.editArr);
         button = (Button) findViewById(R.id.button);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db.addNewClient(name, phone, mail, location, arrival);
+                //db.addNewClient(name, phone, mail, location, arrival);
                 if (v.getId()==R.id.button){
                     Toast.makeText(MainActivity.this,"You have ordered a Taxi", Toast.LENGTH_SHORT).show();
                 }
 
         }
 
-    }
+    });
 
+    }
 }
