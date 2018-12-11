@@ -30,6 +30,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private EditText arrival;
     private Button button;
 
+
+
     private void findViews(){
         name = (EditText)findViewById(R.id.editName);
         phone = (EditText)findViewById(R.id.editPhone);
@@ -50,8 +52,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        DBManager_Factory mydal;
-        mydal.getInstance();
+        DBManager_Factory mydb = new DBManager_Factory();
+        mydb.getInstance();
+
 
         findViews();
     }
