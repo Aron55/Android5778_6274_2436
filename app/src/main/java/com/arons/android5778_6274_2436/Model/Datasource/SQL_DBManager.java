@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 
 import com.arons.android5778_6274_2436.Model.Backend.DBManager;
+import com.arons.android5778_6274_2436.Model.Entities.Classes.Ride;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -23,19 +24,20 @@ public class SQL_DBManager implements DBManager {
     }
 
     @Override
-    public boolean addNewRide(ContentValues Ride, Context context) {
+    public boolean addNewRide(Ride Ride, Context context) {
 
         FirebaseDatabase db = InitializeDB(context);
         if (db == null) return false;
         else {
-            DatabaseReference myRef = db.getReference("message");
-            myRef.setValue(Ride);
+            DatabaseReference myRef = db.getReference("Ride");
+
+           myRef.setValue(Ride);
             return true;
         }
     }
 
     @Override
-    public boolean updateRide(ContentValues Ride, Context context) {
+    public boolean updateRide(Ride Ride, Context context) {
         return false;
     }
 }

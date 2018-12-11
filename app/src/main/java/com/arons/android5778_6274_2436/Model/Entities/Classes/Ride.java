@@ -27,9 +27,10 @@ public class Ride {
         MailOfCustomer = mailOfCustomer;
     }
 
-    public Ride(RideType rideType) {
+    public Ride() {
 
-        RideType = rideType;
+        RideType = com.arons.android5778_6274_2436.Model.Entities.Enum.RideType.FREE;
+
     }
 
     public RideType getRideType() {
