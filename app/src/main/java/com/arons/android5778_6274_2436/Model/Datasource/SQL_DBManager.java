@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 
 import com.arons.android5778_6274_2436.Model.Backend.DBManager;
+import com.arons.android5778_6274_2436.Model.Backend.MapsFunction;
 import com.arons.android5778_6274_2436.Model.Entities.Classes.Ride;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
@@ -30,8 +31,7 @@ public class SQL_DBManager implements DBManager {
         if (db == null) return false;
         else {
             DatabaseReference myRef = db.getReference("Ride");
-
-           myRef.setValue(Ride);
+            myRef.setValue(Ride);
             return true;
         }
     }
