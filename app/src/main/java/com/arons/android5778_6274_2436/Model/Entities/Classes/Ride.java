@@ -8,15 +8,15 @@ import java.util.Date;
 public class Ride {
 
     private RideType RideType;
-    private Location StartLocation;
-    private Location EndLocation;
+    private MyLocation StartLocation;
+    private MyLocation EndLocation;
     private Date BeginningTime;
     private Date EndTime;
     private String NameOfCustomer;
     private String PhoneNumberOfCustomer;
     private String MailOfCustomer;
 
-    public Ride(RideType rideType, Location startLocation, Location endLocation, Time beginingTime, Time endTime, String nameOfCustomer, String phoneNumberOfCustomer, String mailOfCustomer) {
+    public Ride(RideType rideType, MyLocation startLocation, MyLocation endLocation, Time beginingTime, Time endTime, String nameOfCustomer, String phoneNumberOfCustomer, String mailOfCustomer) {
         RideType = rideType;
         StartLocation = startLocation;
         EndLocation = endLocation;
@@ -41,19 +41,19 @@ public class Ride {
         RideType = rideType;
     }
 
-    public Location getStartLocation() {
+    public MyLocation getStartLocation() {
         return StartLocation;
     }
 
-    public void setStartLocation(Location startLocation) {
+    public void setStartLocation(MyLocation startLocation) {
         StartLocation = startLocation;
     }
 
-    public Location getEndLocation() {
+    public MyLocation getEndLocation() {
         return EndLocation;
     }
 
-    public void setEndLocation(Location endLocation) {
+    public void setEndLocation(MyLocation endLocation) {
         EndLocation = endLocation;
     }
 

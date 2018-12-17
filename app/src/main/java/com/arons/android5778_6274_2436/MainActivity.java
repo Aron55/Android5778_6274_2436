@@ -1,18 +1,19 @@
 package com.arons.android5778_6274_2436;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.arons.android5778_6274_2436.Model.Backend.Const;
 import com.arons.android5778_6274_2436.Model.Backend.DBManager;
 import com.arons.android5778_6274_2436.Model.Backend.DBManager_Factory;
-import com.arons.android5778_6274_2436.Model.Entities.Classes.Location;
+import com.arons.android5778_6274_2436.Model.Backend.MapsFunction;
+import com.arons.android5778_6274_2436.Model.Entities.Classes.MyLocation;
 import com.arons.android5778_6274_2436.Model.Entities.Classes.Ride;
+
+import java.util.Map;
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
@@ -38,17 +39,23 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
         private void addRide(){
-        Ride newRide = new Ride();
-        Location endLocation = new Location(this.destinationCus.getText().toString());
-        Location startLocation = new Location(this.locationCus.getText().toString());
+        try {
+            Ride newRide = new Ride();
+            MyLocation endLocation = MapsFunction.StringToLocation(this.destinationCus.getText().toString(), getApplicationContext());
+            MyLocation startLocation = MapsFunction.StringToLocation(this.locationCus.getText().toString(), getApplicationContext());
 
-        newRide.setEndLocation(endLocation);
-        newRide.setStartLocation(startLocation);
-        newRide.setMailOfCustomer(this.mailCus.getText().toString());
-        newRide.setNameOfCustomer(this.nameCus.getText().toString());
-        newRide.setPhoneNumberOfCustomer(this.phoneCus.getText().toString());
+            newRide.setEndLocation(endLocation);
+            newRide.setStartLocation(startLocation);
+            newRide.setMailOfCustomer(this.mailCus.getText().toString());
+            newRide.setNameOfCustomer(this.nameCus.getText().toString());
+            newRide.setPhoneNumberOfCustomer(this.phoneCus.getText().toString());
 
-        mydb.addNewRide(newRide,getApplicationContext());
+            mydb.addNewRide(newRide, getApplicationContext());
+        }
+        catch (Exception e)
+        {
+
+        }
 
     }
     @Override
@@ -62,7 +69,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View v){
 
         if (v.getId()==R.id.button){
             addRide();
