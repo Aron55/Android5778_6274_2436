@@ -16,19 +16,34 @@ public class MapsFunction {
     }
 
     public static MyLocation StringToLocation(String address, Context context) throws Exception {
-        // Add Israel to the end of the address for more precision
-        address = address + " Israel";
-        Geocoder geocoder = new Geocoder(context);
-        List<Address> location = geocoder.getFromLocationName(address, 10);
 
-        if (location.size() != 0) {
-            // Take the first result
-            Address formatted = location.get(0);
-            // Create a new MyLocation
-            MyLocation newLocation = new MyLocation(formatted.getCountryName(), formatted.getLocality(), formatted.getThoroughfare(), formatted.getSubThoroughfare());
+        try {
+            Geocoder geocoder = new Geocoder(context);
+
+            List<Address> location = geocoder.getFromLocationName(address, 10);
+            MyLocation newLocation;
+
+            if (location.size() == 0) // If no result found
+            {
+                // Add Israel to the end of the address for more precision
+                address = address + " Israel";
+                // Search again
+                location = geocoder.getFromLocationName(address, 10);
+            }
+            if (location.get(0).getLocality()==null) // If still no result
+            {
+                // Save the string received in parameter into the newLocation object
+                newLocation = new MyLocation(address);
+            } else {
+                // Take the first result
+                Address formatted = location.get(0);
+                // Create a new MyLocation
+                newLocation = new MyLocation(formatted.getCountryName(), formatted.getLocality(), formatted.getThoroughfare(), formatted.getSubThoroughfare());
+            }
+
             return newLocation;
-        } else
-            throw new Exception("Not a valid address");
-
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

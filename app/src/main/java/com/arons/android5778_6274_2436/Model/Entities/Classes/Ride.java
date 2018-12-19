@@ -42,7 +42,7 @@ public class Ride {
     }
 
     public MyLocation getStartLocation() {
-        return StartLocation;
+      return StartLocation;
     }
 
     public void setStartLocation(MyLocation startLocation) {
@@ -50,7 +50,7 @@ public class Ride {
     }
 
     public MyLocation getEndLocation() {
-        return EndLocation;
+       return EndLocation;
     }
 
     public void setEndLocation(MyLocation endLocation) {
