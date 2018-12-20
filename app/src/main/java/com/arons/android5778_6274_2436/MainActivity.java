@@ -4,7 +4,10 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+<<<<<<< HEAD
 import android.content.pm.PackageManager;
+=======
+>>>>>>> a4fe9982767c5e12eb3f2fc96a8e1734bf8575fc
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,10 +25,17 @@ import com.arons.android5778_6274_2436.Model.Backend.FieldCheck;
 import com.arons.android5778_6274_2436.Model.Backend.MapsFunction;
 import com.arons.android5778_6274_2436.Model.Entities.Classes.MyLocation;
 import com.arons.android5778_6274_2436.Model.Entities.Classes.Ride;
+<<<<<<< HEAD
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+=======
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+>>>>>>> a4fe9982767c5e12eb3f2fc96a8e1734bf8575fc
 
 import java.util.Date;
 
@@ -36,21 +46,47 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private EditText _name;
     private EditText _phoneNumber;
     private EditText _mail;
-    private EditText _startLocation;
-    private EditText _endLocation;
+    private PlaceAutocompleteFragment _startLocation;
+    private PlaceAutocompleteFragment _endLocation;
     private Button buttonGet;
     DBManager mydb;
     private FusedLocationProviderClient mFusedLocationClient;
+
+
+    private String locationA ;
+    private String locationB ;
 
 
     private void findViews() {
         _name = ((EditText) findViewById(R.id.editName));
         _phoneNumber = (EditText) findViewById(R.id.editPhone);
         _mail = (EditText) findViewById(R.id.editMail);
-        _startLocation = (EditText) findViewById(R.id.editDep);
-        _endLocation = (EditText) findViewById(R.id.editDes);
+        _startLocation = (PlaceAutocompleteFragment)getFragmentManager().findFragmentById( R.id.autoDep );
+        _endLocation = (PlaceAutocompleteFragment)getFragmentManager().findFragmentById( R.id.autoDest );
         buttonGet = (Button) findViewById(R.id.button);
+
         buttonGet.setOnClickListener(this);
+
+        _startLocation.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                locationA = place.getAddress().toString();;
+                // .getAddress().toString();//get place details here
+            }
+            @Override
+            public void onError(Status status) {
+            }
+        });
+
+        _endLocation.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                locationB = place.getAddress().toString();
+            }
+            @Override
+            public void onError(Status status) {
+            }
+        });
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -69,8 +105,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     @Override
                     protected Void doInBackground(Void... voids) {
                         try {
-                            MyLocation endLocation = MapsFunction.StringToLocation(_endLocation.getText().toString(), getApplicationContext());
-                            MyLocation startLocation = MapsFunction.StringToLocation(_startLocation.getText().toString(), getApplicationContext());
+                            MyLocation endLocation = MapsFunction.StringToLocation(locationB, getApplicationContext());
+                            MyLocation startLocation = MapsFunction.StringToLocation(locationA, getApplicationContext());
                             newRide.setEndLocation(endLocation);
                             newRide.setStartLocation(startLocation);
                         } catch (Exception e) {
@@ -90,34 +126,28 @@ public class MainActivity extends Activity implements View.OnClickListener {
                             protected Void doInBackground(Void... voids) {
                                 try {
                                     mydb.addNewRide(newRide, getApplicationContext());
-
                                 } catch (Exception e) {
                                     messageBox("Error", e.getMessage() + "\n\n" + e.getCause().getMessage());
                                 }
                                 return null;
                             }
-
                             @Override
                             protected void onPostExecute(Void aVoid) {
                                 super.onPostExecute(aVoid);
                                 Toast.makeText(MainActivity.this, "You have ordered a Taxi", Toast.LENGTH_SHORT).show();
                             }
                         }.execute();
-
                     }
                 }.execute();
-
 
                 newRide.setMailOfCustomer(this._mail.getText().toString());
                 newRide.setNameOfCustomer(this._name.getText().toString());
                 newRide.setPhoneNumberOfCustomer(this._phoneNumber.getText().toString());
                 newRide.setBeginningTime(new Date());
             }
-
         } catch (Exception e) {
             messageBox("Error", e.getMessage() + "\n\n" + e.getCause().getMessage());
         }
-
     }
 
     @Override
@@ -158,6 +188,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private boolean checkFields() {
         boolean emailValid = FieldCheck.isEmailValid(this._mail.getText().toString());
         boolean phoneValid = FieldCheck.isPhoneNumberValid(this._phoneNumber.getText().toString());
+        //boolean nameValid = FieldCheck.isNameValid(this._name.getText().toString());
 
         if (!emailValid) {
             messageBox("Argument Error", "Email is not valid");
@@ -167,6 +198,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
             messageBox("Argument Error", "Phone is not valid");
             return false;
         }
+       // if(!nameValid)
+        //{
+          //  messageBox("Argument Error","Name is not valid");
+         //   return false;
+       // }
         return true;
     }
 
