@@ -16,43 +16,36 @@ import com.google.firebase.database.ValueEventListener;
 
 public class SQL_DBManager implements DBManager {
 
-    private FirebaseDatabase InitializeDB(Context context) {
+    private FirebaseDatabase InitializeDB(Context context) throws Exception {
         try {
             FirebaseApp.initializeApp(context);
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             return database;
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new Exception("Error connecting to the DataBase",e);
         }
-        return null;
+
     }
 
     @Override
-    public boolean addNewRide(Ride Ride, Context context) {
+    public boolean addNewRide(Ride Ride, Context context) throws Exception {
 
-        FirebaseDatabase db = InitializeDB(context);
-        if (db == null) return false;
-        else {
-            DatabaseReference myRef = db.getReference("Ride");
-            //myRef.setValue(Ride);
-            //myRef.child("Ride").setValue(Ride);
+        try {
+            FirebaseDatabase db = InitializeDB(context);
+            if (db == null) return false;
+            else {
+                DatabaseReference myRef = db.getReference("Ride");
+                //myRef.setValue(Ride);
+                //myRef.child("Ride").setValue(Ride);
 
-            myRef.push().setValue(Ride);
-
-
-
-
-
-
-
-            return true;
+                myRef.push().setValue(Ride);
+                return true;
+            }
+        } catch (Exception e) {
+            throw new Exception("Server error - Error when trying to add the ride to the database",e);
         }
     }
 
-    @Override
-    public boolean updateRide(Ride Ride, Context context) {
-        return false;
     }
-}
 

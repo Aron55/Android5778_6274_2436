@@ -16,11 +16,11 @@ public class Ride {
     private String PhoneNumberOfCustomer;
     private String MailOfCustomer;
 
-    public Ride(RideType rideType, MyLocation startLocation, MyLocation endLocation, Time beginingTime, Time endTime, String nameOfCustomer, String phoneNumberOfCustomer, String mailOfCustomer) {
+    public Ride(RideType rideType, MyLocation startLocation, MyLocation endLocation, Time beginningTime, Time endTime, String nameOfCustomer, String phoneNumberOfCustomer, String mailOfCustomer) {
         RideType = rideType;
         StartLocation = startLocation;
         EndLocation = endLocation;
-        BeginningTime = beginingTime;
+        BeginningTime = beginningTime;
         EndTime = endTime;
         NameOfCustomer = nameOfCustomer;
         PhoneNumberOfCustomer = phoneNumberOfCustomer;

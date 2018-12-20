@@ -30,7 +30,7 @@ public class MapsFunction {
                 // Search again
                 location = geocoder.getFromLocationName(address, 10);
             }
-            if (location.get(0).getLocality()==null) // If still no result
+            if (location.size() == 0 || location.get(0).getLocality()==null) // If still no result
             {
                 // Save the string received in parameter into the newLocation object
                 newLocation = new MyLocation(address);
