@@ -25,7 +25,7 @@
                     android:id="@+id/editName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Full Name :"
+                    android:hint="@string/full_name"
                     android:inputType="textPersonName" />
 
             </android.support.design.widget.TextInputLayout>
@@ -43,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="Phone Number :"
+                    android:hint="@string/phone_number"
                     android:inputType="phone" />
             </android.support.design.widget.TextInputLayout>
 
@@ -60,46 +60,28 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="E-Mail :"
+                    android:hint="@string/e_mail"
                     android:inputType="textEmailAddress" />
 
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/textInputLayout4"
+            <fragment
+                android:id="@+id/autoDep"
+                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_weight="1">
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1" />
 
-                <EditText
-                    android:id="@+id/editDep"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="Where are you ?"
-                    android:inputType="textPostalAddress" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/textInputLayout5"
+            <fragment
+                android:id="@+id/autoDest"
+                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="60dp"
-                android:layout_marginTop="10dp">
-
-                <EditText
-                    android:id="@+id/editDes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="Where did you want to go ?"
-                    android:inputType="textPostalAddress" />
-
-            </android.support.design.widget.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1" />
 
             <Button
                 android:id="@+id/button"
@@ -107,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="250dp"
                 android:layout_marginLeft="86dp"
-                android:text="Get a Taxi !"
+                android:text="@string/get_a_taxi"
                 android:textSize="16sp" />
 
         </LinearLayout>

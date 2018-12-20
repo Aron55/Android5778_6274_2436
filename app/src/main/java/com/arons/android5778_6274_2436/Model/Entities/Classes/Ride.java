@@ -1,5 +1,7 @@
 package com.arons.android5778_6274_2436.Model.Entities.Classes;
 
+import android.location.Location;
+
 import com.arons.android5778_6274_2436.Model.Entities.Enum.RideType;
 
 import java.sql.Time;
@@ -96,4 +98,5 @@ public class Ride {
     public void setMailOfCustomer(String mailOfCustomer) {
         MailOfCustomer = mailOfCustomer;
     }
+
 }

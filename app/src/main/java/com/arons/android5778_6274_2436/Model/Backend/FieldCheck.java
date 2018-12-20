@@ -18,5 +18,12 @@ public class FieldCheck {
             Pattern pat = Pattern.compile(phoneRegex);
             return phoneNumber != null && pat.matcher(phoneNumber).matches();
         }
+        public static boolean isNameValid(String name) {
+        String nameRegex = "[A-Z]+\\e+[A-Z]";
+
+        Pattern pat = Pattern.compile(nameRegex,Pattern.CASE_INSENSITIVE);
+        return name != null && pat.matcher(name).matches();
+    }
+
 
 }
