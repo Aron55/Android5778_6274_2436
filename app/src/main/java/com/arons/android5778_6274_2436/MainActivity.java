@@ -3,7 +3,6 @@ package com.arons.android5778_6274_2436;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,33 +13,32 @@ import android.widget.Toast;
 
 import com.arons.android5778_6274_2436.Model.Backend.DBManager;
 import com.arons.android5778_6274_2436.Model.Backend.DBManager_Factory;
+import com.arons.android5778_6274_2436.Model.Backend.FieldCheck;
 import com.arons.android5778_6274_2436.Model.Backend.MapsFunction;
 import com.arons.android5778_6274_2436.Model.Entities.Classes.MyLocation;
 import com.arons.android5778_6274_2436.Model.Entities.Classes.Ride;
-import com.google.android.gms.tasks.Task;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Map;
+
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
 
-    private EditText nameCus;
-    private EditText phoneCus;
-    private EditText mailCus;
-    private EditText locationCus;
-    private EditText destinationCus;
+    private EditText _name;
+    private EditText _phoneNumber;
+    private EditText _mail;
+    private EditText _startLocation;
+    private EditText _endLocation;
     private Button buttonGet;
     DBManager mydb;
 
 
     private void findViews() {
-        nameCus = (EditText) findViewById(R.id.editName);
-        phoneCus = (EditText) findViewById(R.id.editPhone);
-        mailCus = (EditText) findViewById(R.id.editMail);
-        locationCus = (EditText) findViewById(R.id.editDep);
-        destinationCus = (EditText) findViewById(R.id.editDes);
+        _name = ((EditText) findViewById(R.id.editName));
+        _phoneNumber = (EditText) findViewById(R.id.editPhone);
+        _mail = (EditText) findViewById(R.id.editMail);
+        _startLocation = (EditText) findViewById(R.id.editDep);
+        _endLocation = (EditText) findViewById(R.id.editDes);
         buttonGet = (Button) findViewById(R.id.button);
         buttonGet.setOnClickListener(this);
     }
@@ -50,55 +48,58 @@ public class MainActivity extends Activity implements View.OnClickListener {
         try {
             final Ride newRide = new Ride();
 
-            // Google Maps Task + Firebase task
-            new AsyncTask<Void, Void, Void>() {
+            if (checkFields()) {
 
-                @Override
-                protected Void doInBackground(Void... voids) {
-                    try {
-                        MyLocation endLocation = MapsFunction.StringToLocation(destinationCus.getText().toString(), getApplicationContext());
-                        MyLocation startLocation = MapsFunction.StringToLocation(locationCus.getText().toString(), getApplicationContext());
-                        newRide.setEndLocation(endLocation);
-                        newRide.setStartLocation(startLocation);
-                    } catch (Exception e) {
-                        messageBox("Error", e.getMessage() + "\n\n" + e.getCause().getMessage());
+                // Google Maps Task + Firebase task
+                new AsyncTask<Void, Void, Void>() {
+
+                    @Override
+                    protected Void doInBackground(Void... voids) {
+                        try {
+                            MyLocation endLocation = MapsFunction.StringToLocation(_endLocation.getText().toString(), getApplicationContext());
+                            MyLocation startLocation = MapsFunction.StringToLocation(_startLocation.getText().toString(), getApplicationContext());
+                            newRide.setEndLocation(endLocation);
+                            newRide.setStartLocation(startLocation);
+                        } catch (Exception e) {
+                            messageBox("Error", e.getMessage() + "\n\n" + e.getCause().getMessage());
+                        }
+                        return null;
                     }
-                    return null;
-                }
 
-                @Override
-                protected void onPostExecute(Void aVoid) {
-                    super.onPostExecute(aVoid);
+                    @Override
+                    protected void onPostExecute(Void aVoid) {
+                        super.onPostExecute(aVoid);
 
-                    // Firebase task
-                    new AsyncTask<Void, Void, Void>() {
+                        // Firebase task
+                        new AsyncTask<Void, Void, Void>() {
 
-                        @Override
-                        protected Void doInBackground(Void... voids) {
-                            try {
-                                mydb.addNewRide(newRide, getApplicationContext());
+                            @Override
+                            protected Void doInBackground(Void... voids) {
+                                try {
+                                    mydb.addNewRide(newRide, getApplicationContext());
 
-                            } catch (Exception e) {
-                                messageBox("Error", e.getMessage() + "\n\n" + e.getCause().getMessage());
+                                } catch (Exception e) {
+                                    messageBox("Error", e.getMessage() + "\n\n" + e.getCause().getMessage());
+                                }
+                                return null;
                             }
-                            return null;
-                        }
 
-                        @Override
-                        protected void onPostExecute(Void aVoid) {
-                            super.onPostExecute(aVoid);
-                            Toast.makeText(MainActivity.this, "You have ordered a Taxi", Toast.LENGTH_SHORT).show();
-                        }
-                    }.execute();
+                            @Override
+                            protected void onPostExecute(Void aVoid) {
+                                super.onPostExecute(aVoid);
+                                Toast.makeText(MainActivity.this, "You have ordered a Taxi", Toast.LENGTH_SHORT).show();
+                            }
+                        }.execute();
 
-                }
-            }.execute();
+                    }
+                }.execute();
 
 
-            newRide.setMailOfCustomer(this.mailCus.getText().toString());
-            newRide.setNameOfCustomer(this.nameCus.getText().toString());
-            newRide.setPhoneNumberOfCustomer(this.phoneCus.getText().toString());
-            newRide.setBeginningTime(new Date());
+                newRide.setMailOfCustomer(this._mail.getText().toString());
+                newRide.setNameOfCustomer(this._name.getText().toString());
+                newRide.setPhoneNumberOfCustomer(this._phoneNumber.getText().toString());
+                newRide.setBeginningTime(new Date());
+            }
 
         } catch (Exception e) {
             messageBox("Error", e.getMessage() + "\n\n" + e.getCause().getMessage());
@@ -116,7 +117,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         findViews();
     }
 
-
     @Override
     public void onClick(View v) {
 
@@ -124,7 +124,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
             addRide();
         }
     }
-
 
     private void messageBox(String method, String message) {
         Log.d("EXCEPTION: " + method, message);
@@ -135,6 +134,23 @@ public class MainActivity extends Activity implements View.OnClickListener {
         messageBox.setCancelable(false);
         messageBox.setNeutralButton("OK", null);
         messageBox.show();
+    }
+
+    private boolean checkFields(){
+        boolean emailValid = FieldCheck.isEmailValid(this._mail.getText().toString());
+        boolean phoneValid = FieldCheck.isPhoneNumberValid(this._phoneNumber.getText().toString());
+
+        if(!emailValid)
+        {
+            messageBox("Argument Error","Email is not valid");
+            return false;
+        }
+        if(!phoneValid)
+        {
+            messageBox("Argument Error","Phone is not valid");
+            return false;
+        }
+        return true;
     }
 }
 
