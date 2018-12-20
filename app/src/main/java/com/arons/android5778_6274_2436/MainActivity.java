@@ -4,10 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-<<<<<<< HEAD
 import android.content.pm.PackageManager;
-=======
->>>>>>> a4fe9982767c5e12eb3f2fc96a8e1734bf8575fc
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,17 +22,14 @@ import com.arons.android5778_6274_2436.Model.Backend.FieldCheck;
 import com.arons.android5778_6274_2436.Model.Backend.MapsFunction;
 import com.arons.android5778_6274_2436.Model.Entities.Classes.MyLocation;
 import com.arons.android5778_6274_2436.Model.Entities.Classes.Ride;
-<<<<<<< HEAD
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-=======
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
->>>>>>> a4fe9982767c5e12eb3f2fc96a8e1734bf8575fc
 
 import java.util.Date;
 
@@ -51,18 +45,16 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private Button buttonGet;
     DBManager mydb;
     private FusedLocationProviderClient mFusedLocationClient;
-
-
-    private String locationA ;
-    private String locationB ;
+    private String locationA;
+    private String locationB;
 
 
     private void findViews() {
         _name = ((EditText) findViewById(R.id.editName));
         _phoneNumber = (EditText) findViewById(R.id.editPhone);
         _mail = (EditText) findViewById(R.id.editMail);
-        _startLocation = (PlaceAutocompleteFragment)getFragmentManager().findFragmentById( R.id.autoDep );
-        _endLocation = (PlaceAutocompleteFragment)getFragmentManager().findFragmentById( R.id.autoDest );
+        _startLocation = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.autoDep);
+        _endLocation = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.autoDest);
         buttonGet = (Button) findViewById(R.id.button);
 
         buttonGet.setOnClickListener(this);
@@ -70,9 +62,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         _startLocation.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
-                locationA = place.getAddress().toString();;
-                // .getAddress().toString();//get place details here
+                locationA = place.getAddress().toString();
             }
+
             @Override
             public void onError(Status status) {
             }
@@ -83,6 +75,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             public void onPlaceSelected(Place place) {
                 locationB = place.getAddress().toString();
             }
+
             @Override
             public void onError(Status status) {
             }
@@ -96,17 +89,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
             if (checkFields()) {
 
-                //MyLocation newLocation = getCurrentLocation();
-
-
                 // Google Maps Task + Firebase task
                 new AsyncTask<Void, Void, Void>() {
 
                     @Override
                     protected Void doInBackground(Void... voids) {
                         try {
-                            MyLocation endLocation = MapsFunction.StringToLocation(locationB, getApplicationContext());
-                            MyLocation startLocation = MapsFunction.StringToLocation(locationA, getApplicationContext());
+                            MyLocation endLocation = new MyLocation(locationB);
+                            MyLocation startLocation = new MyLocation(locationA);
                             newRide.setEndLocation(endLocation);
                             newRide.setStartLocation(startLocation);
                         } catch (Exception e) {
@@ -131,6 +121,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                 }
                                 return null;
                             }
+
                             @Override
                             protected void onPostExecute(Void aVoid) {
                                 super.onPostExecute(aVoid);
@@ -154,13 +145,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         mydb = DBManager_Factory.getInstance();
         super.onCreate(savedInstanceState);
-        try {
-           // mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        }
-        catch(Exception e){
-            messageBox("Error",e.getMessage());
-        }
-
         setContentView(R.layout.activity_main);
 
         findViews();
@@ -198,40 +182,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
             messageBox("Argument Error", "Phone is not valid");
             return false;
         }
-       // if(!nameValid)
+        // if(!nameValid)
         //{
-          //  messageBox("Argument Error","Name is not valid");
-         //   return false;
-       // }
+        //  messageBox("Argument Error","Name is not valid");
+        //   return false;
+        // }
         return true;
     }
 
-    private MyLocation getCurrentLocation() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-        }
-
-        Task<Location> t = mFusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-
-                    @SuppressLint("StaticFieldLeak")
-                    @Override
-                    public void onSuccess(final Location location) {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            try{
-                                MyLocation newLocation = MapsFunction.StringToLocation(location.toString(),getApplicationContext());
-                            }
-                            catch(Exception e)
-                            {
-
-                            }
-                        }
-
-                    }
-                });
-        return new MyLocation("test");
-    }
 }
 
 
