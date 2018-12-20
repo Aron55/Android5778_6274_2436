@@ -24,7 +24,7 @@
                 <EditText
                     android:id="@+id/editName"
                     android:layout_width="match_parent"
-                    android:layout_height="33dp"
+                    android:layout_height="wrap_content"
                     android:hint="Full Name :"
                     android:inputType="textPersonName" />
 
@@ -105,7 +105,7 @@
                 android:id="@+id/button"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="150dp"
+                android:layout_marginBottom="250dp"
                 android:layout_marginLeft="86dp"
                 android:text="Get a Taxi !"
                 android:textSize="16sp" />
