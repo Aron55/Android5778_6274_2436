@@ -1,10 +1,15 @@
 package com.arons.android5778_6274_2436;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +22,10 @@ import com.arons.android5778_6274_2436.Model.Backend.FieldCheck;
 import com.arons.android5778_6274_2436.Model.Backend.MapsFunction;
 import com.arons.android5778_6274_2436.Model.Entities.Classes.MyLocation;
 import com.arons.android5778_6274_2436.Model.Entities.Classes.Ride;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.Date;
 
@@ -31,6 +40,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private EditText _endLocation;
     private Button buttonGet;
     DBManager mydb;
+    private FusedLocationProviderClient mFusedLocationClient;
 
 
     private void findViews() {
@@ -49,6 +59,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
             final Ride newRide = new Ride();
 
             if (checkFields()) {
+
+                //MyLocation newLocation = getCurrentLocation();
+
 
                 // Google Maps Task + Firebase task
                 new AsyncTask<Void, Void, Void>() {
@@ -111,6 +124,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         mydb = DBManager_Factory.getInstance();
         super.onCreate(savedInstanceState);
+        try {
+           // mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        }
+        catch(Exception e){
+            messageBox("Error",e.getMessage());
+        }
 
         setContentView(R.layout.activity_main);
 
@@ -136,21 +155,46 @@ public class MainActivity extends Activity implements View.OnClickListener {
         messageBox.show();
     }
 
-    private boolean checkFields(){
+    private boolean checkFields() {
         boolean emailValid = FieldCheck.isEmailValid(this._mail.getText().toString());
         boolean phoneValid = FieldCheck.isPhoneNumberValid(this._phoneNumber.getText().toString());
 
-        if(!emailValid)
-        {
-            messageBox("Argument Error","Email is not valid");
+        if (!emailValid) {
+            messageBox("Argument Error", "Email is not valid");
             return false;
         }
-        if(!phoneValid)
-        {
-            messageBox("Argument Error","Phone is not valid");
+        if (!phoneValid) {
+            messageBox("Argument Error", "Phone is not valid");
             return false;
         }
         return true;
+    }
+
+    private MyLocation getCurrentLocation() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+        }
+
+        Task<Location> t = mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+
+                    @SuppressLint("StaticFieldLeak")
+                    @Override
+                    public void onSuccess(final Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            try{
+                                MyLocation newLocation = MapsFunction.StringToLocation(location.toString(),getApplicationContext());
+                            }
+                            catch(Exception e)
+                            {
+
+                            }
+                        }
+
+                    }
+                });
+        return new MyLocation("test");
     }
 }
 
