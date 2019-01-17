@@ -2,101 +2,99 @@ package com.arons.android5778_6274_2436.Model.Entities.Classes;
 
 import android.location.Location;
 
-import com.arons.android5778_6274_2436.Model.Entities.Enum.RideType;
-
-import java.sql.Time;
-import java.util.Date;
+import java.time.LocalTime;
 
 public class Ride {
 
-    private RideType RideType;
-    private MyLocation StartLocation;
-    private MyLocation EndLocation;
-    private Date BeginningTime;
-    private Date EndTime;
-    private String NameOfCustomer;
-    private String PhoneNumberOfCustomer;
-    private String MailOfCustomer;
 
-    public Ride(RideType rideType, MyLocation startLocation, MyLocation endLocation, Time beginningTime, Time endTime, String nameOfCustomer, String phoneNumberOfCustomer, String mailOfCustomer) {
-        RideType = rideType;
-        StartLocation = startLocation;
-        EndLocation = endLocation;
-        BeginningTime = beginningTime;
-        EndTime = endTime;
-        NameOfCustomer = nameOfCustomer;
-        PhoneNumberOfCustomer = phoneNumberOfCustomer;
-        MailOfCustomer = mailOfCustomer;
+    private ClientRequestStatus mRideState;
+    private AddressAndLocation mPickupAddress;
+    private AddressAndLocation mDestinationAddress;
+    private LocalTime mStartTime;
+    private LocalTime mFinishTime;
+    private String mClientFirstName;
+    private String mClientLastName;
+    private String mClientTelephone;
+    private String mClientEmail;
+    private String mKey;
+
+
+    public ClientRequestStatus getRideState() {
+        return mRideState;
     }
 
-    public Ride() {
-
-        RideType = com.arons.android5778_6274_2436.Model.Entities.Enum.RideType.FREE;
-
+    public void setRideState(ClientRequestStatus rideState) {
+        mRideState = rideState;
     }
 
-    public RideType getRideType() {
-        return RideType;
+    public AddressAndLocation getPickupAddress() {
+        return mPickupAddress;
     }
 
-    public void setRideType(RideType rideType) {
-        RideType = rideType;
+    public void setPickupAddress(AddressAndLocation startAddress) {
+        mPickupAddress=new AddressAndLocation(startAddress);
     }
 
-    public MyLocation getStartLocation() {
-      return StartLocation;
+    public AddressAndLocation getDestinationAddress() {
+        return mDestinationAddress;
     }
 
-    public void setStartLocation(MyLocation startLocation) {
-        StartLocation = startLocation;
+    public void setDestinationAddress(AddressAndLocation destinationAddress) {
+        mDestinationAddress = new AddressAndLocation(destinationAddress);
     }
 
-    public MyLocation getEndLocation() {
-       return EndLocation;
+    public LocalTime getStartTime() {
+        return mStartTime;
     }
 
-    public void setEndLocation(MyLocation endLocation) {
-        EndLocation = endLocation;
+    public void setStartTime(LocalTime startTime) {
+        mStartTime = startTime;
     }
 
-    public Date getBeginningTime() {
-        return BeginningTime;
+    public LocalTime getFinishTime() {
+        return mFinishTime;
     }
 
-    public void setBeginningTime(Date beginningTime) {
-        BeginningTime = beginningTime;
+    public void setFinishTime(LocalTime finishTime) {
+        mFinishTime = finishTime;
     }
 
-    public Date getEndTime() {
-        return EndTime;
+    public String getClientFirstName() {
+        return mClientFirstName;
     }
 
-    public void setEndTime(Date endTime) {
-        EndTime = endTime;
+    public void setClientFirstName(String clientFirstName) {
+        mClientFirstName = clientFirstName;
     }
 
-    public String getNameOfCustomer() {
-        return NameOfCustomer;
+    public String getClientTelephone() {
+        return mClientTelephone;
     }
 
-    public void setNameOfCustomer(String nameOfCustomer) {
-        NameOfCustomer = nameOfCustomer;
+    public void setClientTelephone(String clientTelephone) {
+        mClientTelephone = clientTelephone;
     }
 
-    public String getPhoneNumberOfCustomer() {
-        return PhoneNumberOfCustomer;
+    public String getClientEmail() {
+        return mClientEmail;
     }
 
-    public void setPhoneNumberOfCustomer(String phoneNumberOfCustomer) {
-        PhoneNumberOfCustomer = phoneNumberOfCustomer;
+    public void setClientEmail(String clientEmail) {
+        mClientEmail = clientEmail;
     }
 
-    public String getMailOfCustomer() {
-        return MailOfCustomer;
+    public String getKey() {
+        return mKey;
     }
 
-    public void setMailOfCustomer(String mailOfCustomer) {
-        MailOfCustomer = mailOfCustomer;
+    public void setKey(String key) {
+        mKey = key;
     }
 
+    public String getClientLastName() {
+        return mClientLastName;
+    }
+    public void setClientLastName(String ClientLastName) {
+        mClientLastName = ClientLastName;
+    }
 }

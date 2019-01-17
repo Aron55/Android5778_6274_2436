@@ -1,10 +1,13 @@
 <resources>
-    <string name="app_name">Get a Taxi !</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="get_a_taxi">Get a Taxi !</string>
-    <string name="full_name">Full Name :</string>
-    <string name="phone_number">Phone Number :</string>
-    <string name="e_mail">E-Mail :</string>
-    <string name="where_are_you">Where are you ?</string>
-    <string name="where_did_you_want_to_go">Where did you want to go ?</string>
+    <string name="app_name">RideTaxi</string>
+    <string name="start">Start</string>
+    <string name="firstNameEditText">First name</string>
+    <string name="last_nameEditText">Last Name</string>
+    <string name="destinationEditText">Destination Address</string>
+    <string name="pickup_addressEditText">Pickup Address </string>
+    <string name="e_mailEditText">E-mail</string>
+    <string name="phone_numberEditText">Phone Number</string>
+    <string name="enter_your_details">Enter your details:</string>
+    <string name="order_taxiButton">Order Taxi</string>
+    <string name="all_fields_required">All fields are required!</string>
 </resources>
